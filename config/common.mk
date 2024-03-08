@@ -94,6 +94,11 @@ PRODUCT_SYSTEM_PROPERTIES += \
     ro.ota.allow_downgrade=true
 endif
 
+ifneq ($(TARGET_DISABLE_LINEAGE_SDK), true)
+# Lineage SDK
+include vendor/evolution/config/lineage_sdk_common.mk
+endif
+
 # Disable async MTE on system_server
 PRODUCT_SYSTEM_EXT_PROPERTIES += \
     persist.arm64.memtag.system_server=off
