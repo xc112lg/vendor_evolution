@@ -14,6 +14,9 @@
 # limitations under the License.
 #
 
+# Call the BCR setup
+$(call inherit-product, vendor/bcr/bcr.mk)
+
 # Telephony
 IS_PHONE := true
 
@@ -29,3 +32,7 @@ PRODUCT_PACKAGES += \
 # (for devices that check this)
 PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
     net.tethering.noprovisioning=true
+
+# Disable mobile data by default
+PRODUCT_PRODUCT_PROPERTIES += \
+    ro.com.android.mobiledata=false

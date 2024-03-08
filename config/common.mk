@@ -33,13 +33,18 @@ PRODUCT_PRODUCT_PROPERTIES += \
 PRODUCT_PRODUCT_PROPERTIES += \
     ro.setupwizard.enterprise_mode=1 \
     ro.setupwizard.esim_cid_ignore=00000001 \
-    ro.setupwizard.rotation_locked=true \
     setupwizard.enable_assist_gesture_training=true \
     setupwizard.theme=glif_v4_light \
     setupwizard.feature.baseline_setupwizard_enabled=true \
     setupwizard.feature.skip_button_use_mobile_data.carrier1839=true \
     setupwizard.feature.show_pai_screen_in_main_flow.carrier1839=false \
     setupwizard.feature.show_pixel_tos=false
+
+ifeq ($(PRODUCT_CHARACTERISTICS),tablet)
+PRODUCT_PRODUCT_PROPERTIES += ro.setupwizard.rotation_locked=false
+else
+PRODUCT_PRODUCT_PROPERTIES += ro.setupwizard.rotation_locked=true
+endif
 
 # StorageManager configuration
 PRODUCT_PRODUCT_PROPERTIES += \
@@ -268,6 +273,7 @@ $(call inherit-product-if-exists, vendor/partner_modules/build/mainline_modules_
 endif
 
 # Inherit from audio config
+$(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackage14.mk)
 $(call inherit-product, vendor/evolution/config/audio.mk)
 
 # Inherit from bootanimation config
@@ -306,8 +312,5 @@ $(call inherit-product, vendor/evolution/config/version.mk)
 
 # Pixel Framework
 $(call inherit-product-if-exists, vendor/pixel-framework/config.mk)
-
-# Call the BCR setup
-$(call inherit-product, vendor/bcr/bcr.mk)
 
 -include $(WORKSPACE)/build_env/image-auto-bits.mk
